@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Adicionar Pedido</title>
+  <link rel="stylesheet" href="css/pedido.css">
+  <link rel="stylesheet" href="css/navbar.css">
+</head>
+<body>
+
+      <header>
+    <nav>
+ <div class="logo-container">
+        <a href="catalogo.html" class="logo-text">PAPO RETO</a>
+        <img src="imagens/paporeto.png" alt="Logo" width="70px" class="logo-img">
+
+    </div>
+    <div class="mobile-menu">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+    </div>
+    <ul class="nav-list">
+        <li><a href="registro.html">Registro</a></li>
+        <li><a href="catalogo.html">voltar</a></li>
+    </ul>
+  </nav>
+</header>
+
+ <div class="container">
+    <h1>Adicionar Pedido</h1>
+
+    <section id="produtos-container">
+      <!-- Produtos aparecem aqui -->
+    </section>
+
+    <button id="btn-finalizar-pedido" class="btn">Adicionar Pedido</button>
+
+    <div id="modal-quantidade" class="modal" style="display:none">
+      <h3>Quantidade a retirar</h3>
+      <input type="number" id="quantidade-retirada" min="1">
+      <div class="botoes-card">
+        <button class="btn" onclick="confirmarQuantidade()">Confirmar</button>
+        <button class="btn" onclick="fecharModalQuantidade()">Cancelar</button>
+      </div>
+    </div>
+
+    <div id="modal-finalizar" class="modal" style="display:none">
+      <h3>Finalizar Pedido</h3>
+      <label>Nome do comprador:</label>
+      <input type="text" id="nome-comprador">
+      <div class="botoes-card">
+        <button class="btn" onclick="salvarParaDepois()">Salvar para depois</button>
+        <button class="btn" onclick="confirmarPedido()">Confirmar Pedido</button>
+        <button class="btn" onclick="fecharModalFinalizar()">Cancelar</button>
+      </div>
+    </div>
+    <br>
+    <h2>Pedidos Pendentes</h2>
+    <section id="pedidos-pendentes">
+      <!-- Pedidos pendentes aqui -->
+    </section>
+  </div>
+
+  <script src="js/pedido.js"></script>
+</body>
+</html>
+
+

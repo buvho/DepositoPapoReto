@@ -1,0 +1,222 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  :root{
+    --corletra: rgb(235, 235, 235);
+    --cormenu: #ffe424;
+    --corlogo: #191717;
+    --corbranco: #fff;
+  }
+  
+  body {
+  font-family: Arial, sans-serif;
+  background-color: var(--corbranco);
+  }
+  
+  
+  .container {
+  padding: 20px 4cm; 
+  }
+  
+  header, nav {
+  background-color: var(--cormenu);
+  color: var(--corletra);
+  padding: 1rem;
+  }
+  
+  .logo-container {
+  display: flex;
+  align-items: center;
+  }
+  
+  .logo-img {
+  margin-right: 10px;
+  }
+  
+  .logo-text {
+  color: var(--corlogo);
+  font-size: 1.5rem;
+  text-decoration: none;
+  }
+  
+  .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+  }
+  
+  .nav-list li a {
+  color: var(--corlogo);
+  text-decoration: none;
+  font-weight: bold;
+  }
+  
+  
+  a {
+    color: var(--corbranco);
+    text-decoration: none;
+    transition: 0.3s;
+  }
+  
+  a:hover {
+    opacity: 0.7;
+  }
+  
+  
+  
+  nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 0 20px; 
+    background: var(--cormenu);
+    height: 15vh;
+  }
+  
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .logo-container:hover {
+    opacity: 0.7;
+  }
+  
+  
+  .logo-img {
+    width: 70px;
+    transition: 0.3s;
+  }
+  
+  
+  .logo-text {
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--corlogo);
+    transition: 0.3s;
+    text-decoration: none;
+  }
+  
+  
+  .nav-list {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav-list li {
+    letter-spacing: 3px;
+    margin-left: 32px;
+  }
+  
+  .mobile-menu {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .mobile-menu div {
+    width: 32px;
+    height: 2px;
+    background: var(--corbranco);
+    margin: 8px;
+    transition: 0.3s;
+  }
+  
+  @media (max-width: 999px) {
+    body {
+      overflow-x: hidden;
+    }
+    .nav-list {
+      position: absolute;
+      top: 15vh;
+      right: 0;
+      width: 50vw;
+      height: 85vh;
+      background: var(--cormenu);
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in;
+    }
+    .nav-list li {
+      margin-left: 0;
+      opacity: 0;
+    }
+    .mobile-menu {
+      display: block;
+    }
+  }
+  
+  .nav-list.active {
+    transform: translateX(0);
+  }
+  
+  @keyframes navLinkFade {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .mobile-menu.active .line1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+  }
+  
+  .mobile-menu.active .line2 {
+    opacity: 0;
+  }
+  
+  .mobile-menu.active .line3 {
+    transform: rotate(45deg) translate(-5px, -7px);
+  }
+  
+  
+  /*Filtro*/
+  .filtros-catalogo {
+  margin: 30px auto;
+  max-width: 800px;
+  text-align: center;
+  }
+  
+  .filtros-catalogo form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  }
+  
+  select, .btn-filtrar {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  }
+  
+  .btn-filtrar {
+  background-color: #4a4a36;
+  color: white;
+  transition: 0.3s;
+  }
+  
+  .btn-filtrar:hover {
+  background-color: #333;
+  }
+  
+  
+  
+  
