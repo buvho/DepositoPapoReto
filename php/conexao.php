@@ -1,13 +1,17 @@
 <?php
+function getConnection() {
 $servidor = "localhost";
-$usuario = "root";
+$usuario = "root"; 
 $senha = "";
-$banco = "estoque_bebidas";
+$banco = "paporeto";
 
-$conn = new mysqli($servidor, $usuario, $senha, $banco);
+// Criar conexão
+$conexao = new mysqli($servidor, $usuario, $senha, $banco);
 
-// Verifica erro na conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
+if ($conexao->connect_error) {
+    throw new Exception("falha");
+}
+ $conexao->set_charset("utf8mb4");
+ return $conexao;
 }
 ?>

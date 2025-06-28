@@ -16,19 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function carregarProdutos(categoriaSelecionada = "Todos") {
-  fetch("php/obter_produtos.php")
+  fetch("php/produtos/buscarTodos.php")
     .then(response => response.json())
     .then(produtos => {
+      console.log(produtos)
       const container = document.getElementById("lista-produtos");
       container.innerHTML = "";
-
-      produtos
-        .filter(prod => categoriaSelecionada === "Todos" || prod.categoria === categoriaSelecionada)
+      //.filter(prod => categoriaSelecionada === "Todos" || prod.categoria === categoriaSelecionada)
+      produtos.dados
         .forEach(prod => {
           const div = document.createElement("div");
                 div.classList.add("produto-card");
                   div.innerHTML = `
-                    <img src="imagens/${prod.imagem}" alt="${prod.nome}">
                     <strong>${prod.nome}</strong>
                     <p><b>Categoria:</b> ${prod.categoria}</p>
                     <p><b>Quantidade:</b> ${prod.quantidade}</p>
@@ -62,7 +61,7 @@ function salvarProduto() {
   const form = document.getElementById("formProduto");
   const dados = new FormData(form);
 
-  fetch("php/salvar_produto.php", {
+  fetch("php/produtos/adicionar.php", {
     method: "POST",
     body: dados
   })
