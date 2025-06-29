@@ -11,9 +11,6 @@ try{
         echo json_encode(['mensagem' => 'algum valor esta faltando']);
         exit;
     }
-    
-    $stmt = $conexao->prepare("INSERT INTO produto_categoria (nome,quantidade,preco,imagem) VALUES (?)");
-
     $stmt = $conexao->prepare("INSERT INTO produto (nome,quantidade,preco,imagem,ID_Categoria) VALUES (?,?,?,?,?)");
     $stmt->bind_param("siisi", $dados['nome'],$dados['quantidade'],$dados['preco'],$dados['imagem'],$dados['ID_Categoria']);
 

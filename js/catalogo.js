@@ -83,6 +83,7 @@ async function salvarProduto() {
       alert("Erro ao enviar imagem");
       return;
     }
+    jsonData["ID_Categoria"] = 1;
   }
 
   const rota = jsonData.ID_Produto ? "php/produtos/editar.php" : "php/produtos/adicionar.php";
