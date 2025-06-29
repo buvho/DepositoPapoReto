@@ -80,8 +80,8 @@ function salvarParaDepois() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, itens: produtosSelecionados, status: "pendente" })
   })
-    .then(() => location.reload())
-    .catch(err => console.error(err));
+    //.then(() => location.reload())
+   // .catch(err => console.error(err));
 }
 
 function confirmarPedido() {
@@ -106,19 +106,19 @@ function carregarPedidosPendentes() {
     .then(pedidos => {
       const container = document.getElementById("pedidos-pendentes");
       container.innerHTML = "";
-
-      pedidos.dados.forEach(prod => {
+      console.log(pedidos);
+      pedidos.dados.forEach(pedido => {
         const div = document.createElement("div");
         div.classList.add("pedido-pendente");
-        const itens = prod.itens.map(i => `${i.nome} (x${i.quantidade})`).join(", ");
+        const itens = pedido.produtos.map(i => `${i.nome} (x${i.quantidade})`).join(", ");
 
         div.innerHTML = `
-          <strong>${prod.nome_comprador}</strong><br>
+          <strong>${pedido.nome_cliente}</strong><br>
           <p><strong>Produtos:</strong> ${itens}</p>
-          <p><strong>Total:</strong> R$ ${prod.total.toFixed(2)}</p>
+          <p><strong>Total:</strong> R$ 1000 </p>
           <div class="botoes-card">
-            <button class="btn" onclick="confirmarPagamento(${prod.id})">Confirmar Pagamento</button>
-            <button class="btn" onclick="cancelarPedido(${prod.id})">Cancelar</button>
+            <button class="btn" onclick="confirmarPagamento(${pedido.ID_Pedido})">Confirmar Pagamento</button>
+            <button class="btn" onclick="cancelarPedido(${pedido.ID_Pedido})">Cancelar</button>
           </div>
         `;
 
