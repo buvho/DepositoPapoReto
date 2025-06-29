@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarPedidosPendentes();
 
   document.getElementById("btn-finalizar-pedido").addEventListener("click", () => {
+    console.log(produtosSelecionados)
     if (produtosSelecionados.length > 0) {
       document.getElementById("modal-finalizar").style.display = "block";
     } else {
@@ -15,24 +16,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function carregarProdutos() {
-  fetch("php/obter_produtos.php")
-    .then(res => res.json())
+  fetch("php/produtos/buscarTodos.php")
+    .then(response => response.json())
     .then(produtos => {
+      console.log(produtos)
       const container = document.getElementById("produtos-container");
       container.innerHTML = "";
+      produtos.dados
+        .forEach(prod => {
+          const div = document.createElement("div");
+          div.classList.add("produto-item");
 
-      produtos.forEach(prod => {
-        const div = document.createElement("div");
-        div.classList.add("produto-item");
-
-        div.innerHTML = `
-          <img src="imagens/${prod.imagem}" width="100"><br>
-          <strong>${prod.nome}</strong><br>
-          <p>Estoque: ${prod.quantidade}</p>
-          <p>R$ ${parseFloat(prod.preco).toFixed(2)}</p>
-          <button class="btn" onclick='selecionarProduto(${JSON.stringify(prod)})'>Selecionar</button>
-        `;
-
+          div.innerHTML = `
+            <img src="imagens/${prod.imagem}" width="100"><br>
+            <strong>${prod.nome}</strong><br>
+            <p>Estoque: ${prod.quantidade}</p>
+            <p>R$ ${parseFloat(prod.preco).toFixed(2)}</p>
+            <button class="btn" onclick='selecionarProduto(${JSON.stringify(prod)})'>Selecionar</button>
+          `;
         container.appendChild(div);
       });
     });
@@ -74,7 +75,7 @@ function salvarParaDepois() {
     return;
   }
 
-  fetch("php/salvar_pedido.php", {
+  fetch("php/pedido/adicionar.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, itens: produtosSelecionados, status: "pendente" })
@@ -89,35 +90,35 @@ function confirmarPedido() {
     alert("Informe o nome do comprador");
     return;
   }
-
-  fetch("php/finalizar_pedido.php", {
+  console.log(JSON.stringify({ nome, itens: produtosSelecionados }))
+  fetch("php/pedido/finalizarPedidoNaHora.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, itens: produtosSelecionados })
   })
-    .then(() => location.reload())
+   .then(() => location.reload())
     .catch(err => console.error(err));
 }
 
 function carregarPedidosPendentes() {
-  fetch("php/obter_pedidos.php")
+  fetch("php/pedido/buscarTodos.php")
     .then(res => res.json())
     .then(pedidos => {
       const container = document.getElementById("pedidos-pendentes");
       container.innerHTML = "";
 
-      pedidos.forEach(p => {
+      pedidos.dados.forEach(prod => {
         const div = document.createElement("div");
         div.classList.add("pedido-pendente");
-        const itens = p.itens.map(i => `${i.nome} (x${i.quantidade})`).join(", ");
+        const itens = prod.itens.map(i => `${i.nome} (x${i.quantidade})`).join(", ");
 
         div.innerHTML = `
-          <strong>${p.nome_comprador}</strong><br>
+          <strong>${prod.nome_comprador}</strong><br>
           <p><strong>Produtos:</strong> ${itens}</p>
-          <p><strong>Total:</strong> R$ ${p.total.toFixed(2)}</p>
+          <p><strong>Total:</strong> R$ ${prod.total.toFixed(2)}</p>
           <div class="botoes-card">
-            <button class="btn" onclick="confirmarPagamento(${p.id})">Confirmar Pagamento</button>
-            <button class="btn" onclick="cancelarPedido(${p.id})">Cancelar</button>
+            <button class="btn" onclick="confirmarPagamento(${prod.id})">Confirmar Pagamento</button>
+            <button class="btn" onclick="cancelarPedido(${prod.id})">Cancelar</button>
           </div>
         `;
 
@@ -126,15 +127,7 @@ function carregarPedidosPendentes() {
     });
 }
 
-function confirmarPagamento(id) {
-  fetch("php/confirmar_pagamento.php", {
-    method: "POST",
-    body: new URLSearchParams({ id })
-  })
-    .then(() => location.reload());
-}
-
-function cancelarPedido(id) {
+/* function cancelarPedido(id) {
   if (confirm("Tem certeza que deseja cancelar este pedido?")) {
     fetch("php/cancelar_pedido.php", {
       method: "POST",
@@ -142,4 +135,4 @@ function cancelarPedido(id) {
     })
       .then(() => location.reload());
   }
-}
+} */
