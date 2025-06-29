@@ -29,12 +29,13 @@ function carregarProdutos(categoriaSelecionada = "Todos") {
                 div.classList.add("produto-card");
                   div.innerHTML = `
                     <strong>${prod.nome}</strong>
+                    <img src="imagens/${prod.imagem}">
                     <p><b>Categoria:</b> ${prod.categoria}</p>
                     <p><b>Quantidade:</b> ${prod.quantidade}</p>
                     <p><b>Preço:</b> R$ ${parseFloat(prod.preco).toFixed(2)}</p>
                     <div class="botoes-card">
                       <button onclick='editarProduto(${JSON.stringify(prod)})'>Editar</button>
-                      <button onclick='removerProduto(${prod.id})'>Remover</button>
+                      <button onclick='removerProduto(${prod.ID_Produto})'>Remover</button>
                     </div>
                   `;
 
@@ -47,23 +48,50 @@ function carregarProdutos(categoriaSelecionada = "Todos") {
 function abrirFormulario() {
   document.getElementById("formularioProduto").style.display = "block";
   document.getElementById("formProduto").reset();
-  document.getElementById("produtoId").value = "";
-  document.getElementById("titulo-form").innerText = "Novo Produto";
+  document.getElementById("ID_Produto").value = "";
+  document.getElementById("titulo-form").innerText = "Adcionar Produto";
 }
 
 function fecharFormulario() {
   document.getElementById("formProduto").reset();
-  document.getElementById("produtoId").value = ""; // limpa ID se for edição
+  document.getElementById("ID_Produto").value = ""; // limpa ID se for edição
   document.getElementById("formularioProduto").style.display = "none";
 }
 
-function salvarProduto() {
+async function salvarProduto() {
   const form = document.getElementById("formProduto");
   const dados = new FormData(form);
+  const jsonData = {};
+  dados.forEach((value, key) => {
+    if (key != "imagem")
+      jsonData[key] = value;
+  })
+  const imagem = dados.get("imagem")
+  if (imagem && imagem.size > 0) {
+    const imagemForm = new FormData();
+    imagemForm.append("imagem", imagem);
 
-  fetch("php/produtos/adicionar.php", {
-    method: "POST",
-    body: dados
+    const res = await fetch("php/produtos/uploadImagem.php", {
+      method: "POST",
+      body: imagemForm
+    });
+
+    const data = await res.json();
+    if (data.caminho) {
+      jsonData["imagem"] = data.caminho;
+    } else {
+      alert("Erro ao enviar imagem");
+      return;
+    }
+  }
+
+  const rota = jsonData.ID_Produto ? "php/produtos/editar.php" : "php/produtos/adicionar.php";
+  const metodo = jsonData.ID_Produto ? "PUT" : "POST";
+
+  console.log("depois: "+ JSON.stringify(jsonData))
+  fetch(rota, {
+    method: metodo,
+    body: JSON.stringify(jsonData)
   })
   .then(res => res.text())
   .then(() => {
@@ -74,19 +102,20 @@ function salvarProduto() {
 
 function editarProduto(produto) {
   abrirFormulario();
-  document.getElementById("titulo-form").innerText = "Editar Produto";
-  document.getElementById("produtoId").value = produto.id;
-  document.getElementById("nome").value = produto.nome;
-  document.getElementById("categoria").value = produto.categoria;
-  document.getElementById("quantidade").value = produto.quantidade;
-  document.getElementById("preco").value = produto.preco;
+    console.log(produto)
+    document.getElementById("titulo-form").innerText = "Editar Produto";
+    document.getElementById("ID_Produto").value = produto.ID_Produto;
+    document.getElementById("nome").value = produto.nome;
+    //document.getElementById("categoria").value = produto.categoria;
+    document.getElementById("quantidade").value = produto.quantidade;
+    document.getElementById("preco").value = produto.preco;
 }
 
 function removerProduto(id) {
   if (confirm("Tem certeza que deseja remover este produto?")) {
-    fetch("php/remover_produto.php", {
+    fetch("php/produtos/remover.php", {
       method: "POST",
-      body: new URLSearchParams({ id })
+      body: JSON.stringify({ ID_Produto: id })
     })
     .then(res => res.text())
     .then(() => carregarProdutos());

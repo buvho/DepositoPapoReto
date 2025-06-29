@@ -6,20 +6,18 @@ require_once '../conexao.php';
 $conexao = getConnection();
 try{
     $dados = json_decode(file_get_contents('php://input'), true);
-    if (empty($dados['nome']) || empty($dados['quantidade']) || empty($dados['preco'])) {
+    if (empty($dados['ID_Produto']) || empty($dados['nome']) || empty($dados['quantidade']) || empty($dados['preco'])) {
         http_response_code(400);
         echo json_encode(['mensagem' => 'algum valor esta faltando']);
         exit;
     }
-    
-    $stmt = $conexao->prepare("INSERT INTO produto_categoria (nome,quantidade,preco,imagem) VALUES (?)");
 
-    $stmt = $conexao->prepare("INSERT INTO produto (nome,quantidade,preco,imagem,ID_Categoria) VALUES (?,?,?,?,?)");
-    $stmt->bind_param("siisi", $dados['nome'],$dados['quantidade'],$dados['preco'],$dados['imagem'],$dados['ID_Categoria']);
+    $stmt = $conexao->prepare("UPDATE produto SET nome = ?, quantidade = ?, preco = ? WHERE ID_Produto = ?");
+    $stmt->bind_param("siii", $dados['nome'],$dados['quantidade'],$dados['preco'],$dados['ID_Produto']);
 
     if($stmt->execute()){
         http_response_code(201);
-        echo json_encode(['mensagem' => 'valor inserido com sucesso']);
+        echo json_encode(['mensagem' => 'valor editado com sucesso']);
     } else {
         http_response_code(422);
         echo json_encode(['mensagem' => 'algo deu errado :/']);
