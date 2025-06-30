@@ -30,7 +30,6 @@ function carregarProdutos(categoriaSelecionada = "Todos") {
                   div.innerHTML = `
                     <strong>${prod.nome}</strong>
                     <img src="imagens/${prod.imagem}">
-                    <p><b>Categoria:</b> ${prod.categoria}</p>
                     <p><b>Quantidade:</b> ${prod.quantidade}</p>
                     <p><b>Preço:</b> R$ ${parseFloat(prod.preco).toFixed(2)}</p>
                     <div class="botoes-card">
@@ -83,9 +82,7 @@ async function salvarProduto() {
       alert("Erro ao enviar imagem");
       return;
     }
-    jsonData["ID_Categoria"] = 1;
   }
-
   const rota = jsonData.ID_Produto ? "php/produtos/editar.php" : "php/produtos/adicionar.php";
   const metodo = jsonData.ID_Produto ? "PUT" : "POST";
 
