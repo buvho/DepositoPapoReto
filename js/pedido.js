@@ -117,7 +117,7 @@ function carregarPedidosPendentes() {
           <p><strong>Produtos:</strong> ${itens}</p>
           <p><strong>Total:</strong>R$ ${pedido.valor} </p>
           <div class="botoes-card">
-            <button class="btn" onclick="confirmarPagamento(${pedido.ID_Pedido})">Confirmar Pagamento</button>
+            <button class="btn" onclick="confirmarPedido(${pedido.ID_Pedido})">Confirmar Pagamento</button>
             <button class="btn" onclick="cancelarPedido(${pedido.ID_Pedido})">Cancelar</button>
           </div>
         `;
@@ -127,8 +127,8 @@ function carregarPedidosPendentes() {
     });
 }
 
-function confirmarPagamento(id) {
-  fetch("php/confirmar_pagamento.php", {
+function confirmarPedido(id) {
+  fetch("php/pedido/confirmar_pagamento.php", {
     method: "POST",
     body: new URLSearchParams({ id })
   })
