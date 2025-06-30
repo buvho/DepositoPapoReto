@@ -35,7 +35,7 @@
     <!-- Categorias -->
     <section class="categorias">
       <h2>Categorias:</h2>
-     <ul id="filtro-categorias">
+    <!-- <ul id="filtro-categorias">
   <li data-categoria="Todos">Todos</li>
   <li data-categoria="Refrigerante">Refrigerante</li>
   <li data-categoria="Sucos">Sucos</li>
@@ -44,7 +44,11 @@
   <li data-categoria="Vinhos">Vinhos</li>
   <li data-categoria="Energético">Energético</li>
   <li data-categoria="Água">Água</li>
-</ul>
+  </ul> -->
+
+    <ul id="filtro-categorias">
+    <!-- Categorias vão ser inseridas via JavaScript -->
+    </ul>
 
     </section>
 
@@ -71,6 +75,11 @@
           <option value="Energético">Energético</option>
           <option value="Água">Água</option>
         </select> -->
+
+        <label>Categoria:</label>
+        <select id="categoria" name="ID_Categoria" required>
+          <!--<option value="">Selecione</option>-->
+        </select>
 
 
         <label>Quantidade:</label>
