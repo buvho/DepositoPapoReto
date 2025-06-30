@@ -74,14 +74,14 @@ function salvarParaDepois() {
     alert("Informe o nome do comprador");
     return;
   }
-
+  console.log(JSON.stringify({ nome, itens: produtosSelecionados, status: "pendente" }))
   fetch("php/pedido/adicionar.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ nome, itens: produtosSelecionados, status: "pendente" })
   })
-    //.then(() => location.reload())
-   // .catch(err => console.error(err));
+    .then(() => location.reload())
+    .catch(err => console.error(err));
 }
 
 function confirmarPedido() {
@@ -115,7 +115,7 @@ function carregarPedidosPendentes() {
         div.innerHTML = `
           <strong>${pedido.nome_cliente}</strong><br>
           <p><strong>Produtos:</strong> ${itens}</p>
-          <p><strong>Total:</strong> R$ 1000 </p>
+          <p><strong>Total:</strong>R$ ${pedido.valor} </p>
           <div class="botoes-card">
             <button class="btn" onclick="confirmarPagamento(${pedido.ID_Pedido})">Confirmar Pagamento</button>
             <button class="btn" onclick="cancelarPedido(${pedido.ID_Pedido})">Cancelar</button>
@@ -127,7 +127,15 @@ function carregarPedidosPendentes() {
     });
 }
 
-/* function cancelarPedido(id) {
+function confirmarPagamento(id) {
+  fetch("php/confirmar_pagamento.php", {
+    method: "POST",
+    body: new URLSearchParams({ id })
+  })
+    .then(() => location.reload());
+}
+
+function cancelarPedido(id) {
   if (confirm("Tem certeza que deseja cancelar este pedido?")) {
     fetch("php/cancelar_pedido.php", {
       method: "POST",
@@ -135,4 +143,4 @@ function carregarPedidosPendentes() {
     })
       .then(() => location.reload());
   }
-} */
+}
