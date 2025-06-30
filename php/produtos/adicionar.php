@@ -13,7 +13,7 @@ try{
     }
     
     $stmt = $conexao->prepare("INSERT INTO produto (nome,quantidade,preco,imagem) VALUES (?,?,?,?)");
-    $stmt->bind_param("siis", $dados['nome'],$dados['quantidade'],$dados['preco'],$dados['imagem']);
+    $stmt->bind_param("sids", $dados['nome'],$dados['quantidade'],$dados['preco'],$dados['imagem']);
 
     if($stmt->execute()){
         http_response_code(201);
