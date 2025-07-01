@@ -27,6 +27,8 @@ try {
 
     $stmt->close();
     $conexao->close();
+    $id = $dados['ID_Pedido']
+    setLog("o pedido de id $id foi adcionado adicionados");
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['mensagem' => 'Erro do servidor: ' . $e->getMessage()]);

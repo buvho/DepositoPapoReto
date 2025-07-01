@@ -61,7 +61,9 @@ try{
     $stmt->bind_param("di", $valor, $idPedido);
     $stmt->execute();
     $stmt->close();
-
+    
+    $nome = $dados['nome']
+    setLog("o pedido de $nome foi adcionado adicionados");
     $conexao->commit();
     $conexao->close();
 
