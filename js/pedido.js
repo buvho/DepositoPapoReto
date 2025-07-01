@@ -111,13 +111,14 @@ function carregarPedidosPendentes() {
         const div = document.createElement("div");
         div.classList.add("pedido-pendente");
         const itens = pedido.produtos.map(i => `${i.nome} (x${i.quantidade})`).join(", ");
-
+        const itensPedido = pedido.produtos.map(i => ({ id: i.ID_Produto, quantidade: i.quantidade}));
+        const stringfy = JSON.stringify({ id: pedidos.ID_Pedido, p: itensPedido});
         div.innerHTML = `
           <strong>${pedido.nome_cliente}</strong><br>
           <p><strong>Produtos:</strong> ${itens}</p>
           <p><strong>Total:</strong>R$ ${pedido.valor} </p>
           <div class="botoes-card">
-            <button class="btn" onclick="confirmarPagamento(${pedido.ID_Pedido})">Confirmar Pagamento</button>
+            <button class="btn" onclick="confirmarPedido(${pedido.ID_Pedido})">Confirmar Pagamento</button>
             <button class="btn" onclick="cancelarPedido(${pedido.ID_Pedido})">Cancelar</button>
           </div>
         `;
@@ -127,19 +128,19 @@ function carregarPedidosPendentes() {
     });
 }
 
-function confirmarPagamento(id) {
-  fetch("php/confirmar_pagamento.php", {
+function confirmarPedido(id) {
+  fetch("php/pedido/remover.php", {
     method: "POST",
-    body: new URLSearchParams({ id })
+    body: JSON.stringify({ ID_Pedido: id })
   })
     .then(() => location.reload());
 }
 
 function cancelarPedido(id) {
-  if (confirm("Tem certeza que deseja cancelar este pedido?")) {
-    fetch("php/cancelar_pedido.php", {
+ if (confirm("Tem certeza que deseja cancelar este pedido?")) {
+    fetch("php/pedido/cancelar.php", {
       method: "POST",
-      body: new URLSearchParams({ id })
+      body: JSON.stringify({ ID_Pedido: id})
     })
       .then(() => location.reload());
   }
