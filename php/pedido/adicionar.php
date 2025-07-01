@@ -62,7 +62,7 @@ try{
     $stmt->execute();
     $stmt->close();
     
-    $nome = $dados['nome']
+    $nome = $dados['nome'];
     setLog("o pedido de $nome foi adcionado adicionados");
     $conexao->commit();
     $conexao->close();
