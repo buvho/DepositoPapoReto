@@ -33,6 +33,11 @@ try {
     }
     $stmt->close();
 
+    $stmt = $conn->prepare("DELETE FROM produto_categoria WHERE ID_Produto = ?");
+    $stmt->bind_param("i", $dados['ID_Produto']);
+    $stmt->execute();
+    $stmt->close();
+
     // Excluir produto
     $stmt = $conexao->prepare("DELETE FROM produto WHERE ID_Produto = ?");
     $stmt->bind_param("i", $idProduto);
