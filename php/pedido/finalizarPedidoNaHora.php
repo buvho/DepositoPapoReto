@@ -31,6 +31,8 @@ try {
             $stmt->close();
         }
     }
+    $nome = $dados['nome']
+    setLog("o pedido de $nome foi concluido");
     $conexao->commit();
     $conexao->close();
 } catch (Exception $e) {
