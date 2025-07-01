@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once '../conexao.php';
+require_once '../log/adicionar.php';
 $conexao = getConnection();
 try{
     $dados = json_decode(file_get_contents('php://input'), true);

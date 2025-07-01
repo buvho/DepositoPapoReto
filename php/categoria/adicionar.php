@@ -1,5 +1,6 @@
 <?php
 require '../conexao.php';
+require_once '../log/adicionar.php';
 
 try{
     $conn = getConnection();
@@ -32,6 +33,7 @@ try{
                 'mensagem' => 'Categoria cadastrada com sucesso!',
                 'id_categoria' => $id_categoria
             ]);
+            setLog($dados['nome']." adicionada");
             $stmt->close();
         }
     }

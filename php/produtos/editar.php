@@ -2,7 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once '../conexao.php';/*
+require_once '../conexao.php';
+require_once '../log/adicionar.php';/*
 $conexao = getConnection();
 try{
     $dados = json_decode(file_get_contents('php://input'), true);
@@ -46,6 +47,7 @@ try{
     if($stmt->execute()){
         http_response_code(201);
         echo json_encode(['mensagem' => 'valor editado com sucesso']);
+        setLog($dados['nome']." ".$dados['quantidade']." alterado");
     } else {
         http_response_code(422);
         echo json_encode(['mensagem' => 'algo deu errado :/']);

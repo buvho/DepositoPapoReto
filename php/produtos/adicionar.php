@@ -2,7 +2,8 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-require_once '../conexao.php';/* Do caio
+require_once '../conexao.php';
+require_once '../log/adicionar.php';/* Do caio
 $conexao = getConnection();
 try{
     $dados = json_decode(file_get_contents('php://input'), true);
@@ -87,6 +88,7 @@ try {
     }
 
     echo json_encode(["sucesso" => true]);
+    setLog("$quantidade $nome  adicionados");
 
 } catch (Exception $e) {
     http_response_code(500);

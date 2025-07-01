@@ -3,6 +3,7 @@ header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 require_once '../conexao.php';
+require_once '../log/adicionar.php';
 $conexao = getConnection(); // deve retornar um objeto mysqli
 
 try {
@@ -39,6 +40,8 @@ try {
     if ($stmt->execute()) {
         http_response_code(200);
         echo json_encode(['mensagem' => 'Produto deletado com sucesso']);
+        setLog("Produto com id: ". $idProduto." deletado");
+        
     } else {
         http_response_code(500);
         echo json_encode(['mensagem' => 'Erro ao deletar o produto']);

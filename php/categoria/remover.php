@@ -1,5 +1,6 @@
 <?php
 require '../conexao.php';
+require_once '../log/adicionar.php';
 
 try{
     $conn = getConnection();
@@ -22,6 +23,7 @@ try{
     if($stmt->execute()){
         http_response_code(200);
         echo json_encode(['mensagem' => 'Categoria excluída com sucesso']);
+        setLog("categoria com id: ".$dados['id_categoria']." deletada com sucesso");
     }
     else{
         http_response_code(422);
